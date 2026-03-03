@@ -2,31 +2,35 @@ class_name drawability
 extends Node3D
 
 @onready var drawing: Line2D = $Drawing
-@onready var pen: MeshInstance3D = $Pen
+@onready var pen: Node3D = $Pen
 
 var stroke_points: Array[Vector2] = []
-
-var last_mouse_pos: Vector2
-var timer_has_started: bool = false
+var stroke_points_3d: Array[Vector3] = []
+var last_mouse_pos: Vector2 = Vector2(640, 360)
 var mouse_pos: Vector2 = Vector2(640, 360)
+var immediate_mesh: ImmediateMesh
+
+func _ready() -> void:
+	await get_tree().create_timer(0.01).timeout
+	EventBus.emit_signal("get_mesh", attach_immediate_mesh as Callable)
+
+func attach_immediate_mesh(mesh):
+	immediate_mesh = mesh
 
 func paint(event):
-	mouse_pos += event.relative
+	mouse_pos += event.relative * 2
 	mouse_pos = mouse_pos.clamp(Vector2(0, 0), Vector2(1280, 720))
 	
 	if event.button_mask == MOUSE_BUTTON_LEFT:
 		EventBus.currentState |= EventBus.state.DRAW
 		
-		pen.position = pen.position.lerp(Vector3(mouse_pos.x/1000, -mouse_pos.y/1000, -0.3) - Vector3(0.3, -0.7, 0.0), 0.1)
-		
-		var interpolation = last_mouse_pos.distance_squared_to(mouse_pos)
-		if interpolation > 8:
-			add_line(last_mouse_pos, mouse_pos)
-		else:
-			add_point(mouse_pos)
+		pen.position = pen.position.lerp(Vector3(mouse_pos.x/1000, -mouse_pos.y/1000, 0) - Vector3(0.3, -0.7, 0.0), 0.1)
 		
 		if stroke_points.is_empty() or stroke_points.back().distance_to(mouse_pos) > 5:
 			stroke_points.append(mouse_pos)
+			
+			stroke_points_3d.append(pen.global_position+-pen.basis.z*0.2)
+			add_point()
 	elif EventBus.currentState & EventBus.state.DRAW:
 		EventBus.currentState &= ~EventBus.state.DRAW
 		
@@ -34,17 +38,22 @@ func paint(event):
 			recognize_shape(stroke_points)
 		stroke_points.clear()
 		drawing.clear_points()
+		
+		stroke_points_3d.clear()
+		immediate_mesh.clear_surfaces()
+	else:
+		pen.position = pen.position.lerp(Vector3(0, 0, 0), 0.1)
 	
 	last_mouse_pos = mouse_pos
 
-func add_point(where: Vector2):
-	drawing.add_point(where)
-
-func add_line(from: Vector2, to: Vector2):
-	add_point(from)
-	while from != to:
-		from = from.move_toward(to, 6)
-		add_point(from)
+func add_point():
+	immediate_mesh.clear_surfaces()
+	if stroke_points_3d.size() < 2: return
+	
+	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
+	for i in stroke_points_3d:
+		immediate_mesh.surface_add_vertex(i)
+	immediate_mesh.surface_end()
 
 const NUM_POINTS = 64
 const SQUARE_SIZE = 250.0

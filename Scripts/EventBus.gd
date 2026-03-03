@@ -9,3 +9,5 @@ enum state {
 	FALL = 1 << 4
 }
 var currentState: int = state.NONE
+
+signal get_mesh(function: Callable)

@@ -7,9 +7,12 @@
 [node name="drawability" type="Node3D"]
 script = ExtResource("1_qyhir")
 
-[node name="Pen" type="MeshInstance3D" parent="."]
+[node name="Pen" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pen"]
 transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -0.1, 0, 0.1, -4.371139e-09, 0, 0, -0.3)
 mesh = SubResource("CylinderMesh_2bn8y")
+skeleton = NodePath("../..")
 
 [node name="Drawing" type="Line2D" parent="."]
 default_color = Color(1, 0, 1, 1)

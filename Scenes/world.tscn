@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwsd8at4wvk3c"]
+[gd_scene load_steps=5 format=3 uid="uid://bwsd8at4wvk3c"]
 
+[ext_resource type="Script" uid="uid://dmx72p8rj4i2b" path="res://Scripts/world.gd" id="1_5a7ea"]
 [ext_resource type="PackedScene" uid="uid://dkhx7wa5a28o7" path="res://Scenes/illusionist.tscn" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://can6askbfoecm" path="res://Scenes/ultra_cinematic_camera.tscn" id="2_go701"]
 
@@ -7,6 +8,7 @@
 size = Vector3(10, 0.2, 10)
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_5a7ea")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 collision_mask = 3
