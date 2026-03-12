@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkhx7wa5a28o7"]
+[gd_scene format=3 uid="uid://dkhx7wa5a28o7"]
 
 [ext_resource type="Script" uid="uid://dv2iosl67470g" path="res://Scripts/playerControl.gd" id="1_ouoam"]
 [ext_resource type="PackedScene" uid="uid://bmjcoq1iiec1r" path="res://Scenes/Components/input_movement.tscn" id="2_ouoam"]
@@ -14,25 +14,25 @@ height = 0.8
 radius = 0.2
 height = 0.8
 
-[node name="Illusionist" type="CharacterBody3D"]
+[node name="Illusionist" type="CharacterBody3D" unique_id=1714127164]
 collision_layer = 2
 script = ExtResource("1_ouoam")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1669794550]
 mesh = SubResource("CapsuleMesh_yp4wr")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=4741773]
 transform = Transform3D(0.3, 0, 0, 0, -4.371139e-09, -0.2, 0, 0.1, -8.742278e-09, 0, 0.25, -0.1)
 mesh = SubResource("CylinderMesh_dtxti")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2051494955]
 shape = SubResource("CapsuleShape3D_yp4wr")
 
-[node name="inputMovement" parent="." instance=ExtResource("2_ouoam")]
+[node name="inputMovement" parent="." unique_id=615445973 instance=ExtResource("2_ouoam")]
 
-[node name="drawability" parent="." instance=ExtResource("3_dtxti")]
+[node name="drawability" parent="." unique_id=1013069317 instance=ExtResource("3_dtxti")]
 
-[node name="UI -- For Just Test" type="Control" parent="."]
+[node name="UI -- For Just Test" type="Control" parent="." unique_id=561609677]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,7 +40,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Last_Spell_Label" type="Label" parent="UI -- For Just Test"]
+[node name="Last_Spell_Label" type="Label" parent="UI -- For Just Test" unique_id=820408985]
 layout_mode = 0
 offset_left = 73.0
 offset_top = 32.0

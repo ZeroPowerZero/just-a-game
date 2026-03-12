@@ -266,7 +266,7 @@ func _on_finish_button_pressed() -> void:
 	current_draw_index += 1
 	
 	if not spell_name:
-		get_tree().change_scene_to_file("res://Scenes/world.tscn")
+		get_tree().change_scene_to_file("res://Scenes/first_person_demo.tscn")
 		return
 	
 	get_parent().get_node("Label").text = spell_name

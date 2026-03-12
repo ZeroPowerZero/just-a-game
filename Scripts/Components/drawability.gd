@@ -15,10 +15,13 @@ const SQUARE_SIZE = 250.0
 # REFERENCES
 # ==============================
 
-@onready var drawing: Line2D = $Drawing
-@onready var pen: Node3D = $Pen
-@onready var last_spell_label: Label = $"../UI -- For Just Test/Last_Spell_Label"
+# ==============================
+# REFERENCES
+# ==============================
 
+@onready var drawing: Line2D = $pen/drawing
+@onready var pen: Node3D = $pen
+@onready var last_spell_label: Label = $"../../UI -- For Just Test/Last_Spell_Label"
 var immediate_mesh: ImmediateMesh
 
 # ==============================
